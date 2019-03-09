@@ -1,4 +1,4 @@
-<?php namespace WebBro\UserManagement\Components;
+<?php namespace WebBro\UserForms\Components;
 
 
 use ApplicationException;
@@ -16,8 +16,8 @@ class ResetPassword extends ParentReset
     public function componentDetails()
     {
         return [
-            'name'        => 'webbro.usermanagement::lang.components.resetpassword.name',
-            'description' => 'webbro.usermanagement::lang.components.resetpassword.description'
+            'name'        => 'webbro.userforms::lang.components.resetpassword.name',
+            'description' => 'webbro.userforms::lang.components.resetpassword.description'
         ];
     }
     
@@ -25,8 +25,8 @@ class ResetPassword extends ParentReset
     {
         $properties = parent::defineProperties();
         $properties['showTitles'] = [
-            'title'       => /*Show titles*/'webbro.usermanagement::lang.components.login.show_titles_title',
-            'description' => /*Should the field titles be displayed on the field*/'webbro.usermanagement::lang.components.login.show_titles_desc',
+            'title'       => /*Show titles*/'webbro.userforms::lang.components.login.show_titles_title',
+            'description' => /*Should the field titles be displayed on the field*/'webbro.userforms::lang.components.login.show_titles_desc',
             'type'        => 'checkbox',
             'default'     => 0
         ];

@@ -1,4 +1,4 @@
-<?php namespace WebBro\UserManagement\Components;
+<?php namespace WebBro\UserForms\Components;
 
 use Auth;
 use Cms\Classes\Page;
@@ -19,8 +19,8 @@ class Activate extends Account
     public function componentDetails()
     {
         return [
-            'name'        => 'webbro.usermanagement::lang.components.activate.name',
-            'description' => 'webbro.usermanagement::lang.components.activate.description'
+            'name'        => 'webbro.userforms::lang.components.activate.name',
+            'description' => 'webbro.userforms::lang.components.activate.description'
         ];
     }
     
@@ -49,8 +49,8 @@ class Activate extends Account
     {
         return [
             'redirect' => [
-                'title'       => /*Redirect to*/'webbro.usermanagement::lang.components.deactivate.redirect_to',
-                'description' => /*Suggested redirect page is the login page*/'webbro.usermanagement::lang.components.deactivate.redirect_to_desc',
+                'title'       => /*Redirect to*/'webbro.userforms::lang.components.deactivate.redirect_to',
+                'description' => /*Suggested redirect page is the login page*/'webbro.userforms::lang.components.deactivate.redirect_to_desc',
                 'type'        => 'dropdown',
                 'default'     => ''
             ]

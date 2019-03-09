@@ -1,6 +1,6 @@
 <?php return [
     'plugin' => [
-        'name' => 'User Management',
+        'name' => 'User Forms',
         'description' => 'Extends default user configuration to allow for easy customization of user forms.'
     ],
     'components' => [

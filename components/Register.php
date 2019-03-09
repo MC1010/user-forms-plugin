@@ -1,4 +1,4 @@
-<?php namespace WebBro\UserManagement\Components;
+<?php namespace WebBro\UserForms\Components;
 
 use Auth;
 use Cms\Classes\Page;
@@ -18,8 +18,8 @@ class Register extends Account
     public function componentDetails()
     {
         return [
-            'name'        => 'webbro.usermanagement::lang.components.register.name',
-            'description' => 'webbro.usermanagement::lang.components.register.description'
+            'name'        => 'webbro.userforms::lang.components.register.name',
+            'description' => 'webbro.userforms::lang.components.register.description'
         ];
     }
     
@@ -66,20 +66,20 @@ class Register extends Account
         $properties = parent::defineProperties();
         
         $properties['showTitles'] = [
-            'title'       => /*Show titles*/'webbro.usermanagement::lang.components.login.show_titles_title',
-            'description' => /*Should the field titles be displayed on the field*/'webbro.usermanagement::lang.components.login.show_titles_desc',
+            'title'       => /*Show titles*/'webbro.userforms::lang.components.login.show_titles_title',
+            'description' => /*Should the field titles be displayed on the field*/'webbro.userforms::lang.components.login.show_titles_desc',
             'type'        => 'checkbox',
             'default'     => 0
         ];
         $properties['twoNameFields'] = [
-            'title'       => /*Collect two names*/'webbro.usermanagement::lang.components.register.two_names_title',
-            'description' => /*Checking this has the form show both 'first' and 'last' name*/'webbro.usermanagement::lang.components.register.two_names_desc',
+            'title'       => /*Collect two names*/'webbro.userforms::lang.components.register.two_names_title',
+            'description' => /*Checking this has the form show both 'first' and 'last' name*/'webbro.userforms::lang.components.register.two_names_desc',
             'type'        => 'checkbox',
             'default'     => 0
         ];
         $properties['passwordConfirm'] = [
-            'title'       => /*Require password confirm*/'webbro.usermanagement::lang.components.register.password_confirm_title',
-            'description' => /*Show a second password field for confirmation*/'webbro.usermanagement::lang.components.register.password_confirm_desc',
+            'title'       => /*Require password confirm*/'webbro.userforms::lang.components.register.password_confirm_title',
+            'description' => /*Show a second password field for confirmation*/'webbro.userforms::lang.components.register.password_confirm_desc',
             'type'        => 'checkbox',
             'default'     => 0
         ];

@@ -1,4 +1,4 @@
-<?php namespace WebBro\UserManagement\Components;
+<?php namespace WebBro\UserForms\Components;
 
 use Auth;
 use RainLab\User\Components\Account;
@@ -11,8 +11,8 @@ class Deactivate extends Account
     public function componentDetails()
     {
         return [
-            'name'        => 'webbro.usermanagement::lang.components.deactivate.name',
-            'description' => 'webbro.usermanagement::lang.components.deactivate.description'
+            'name'        => 'webbro.userforms::lang.components.deactivate.name',
+            'description' => 'webbro.userforms::lang.components.deactivate.description'
         ];
     }
     
@@ -38,8 +38,8 @@ class Deactivate extends Account
     {
         return [
             'redirect' => [
-                'title'       => /*Redirect to*/'webbro.usermanagement::lang.components.deactivate.redirect_to',
-                'description' => /*Suggested redirect page is the login page*/'webbro.usermanagement::lang.components.deactivate.redirect_to_desc',
+                'title'       => /*Redirect to*/'webbro.userforms::lang.components.deactivate.redirect_to',
+                'description' => /*Suggested redirect page is the login page*/'webbro.userforms::lang.components.deactivate.redirect_to_desc',
                 'type'        => 'dropdown',
                 'default'     => ''
             ]

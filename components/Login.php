@@ -1,4 +1,4 @@
-<?php namespace WebBro\UserManagement\Components;
+<?php namespace WebBro\UserForms\Components;
 
 use Auth;
 use Cms\Classes\Page;
@@ -19,8 +19,8 @@ class Login extends Account
     public function componentDetails()
     {
         return [
-            'name'        => 'webbro.usermanagement::lang.components.login.name',
-            'description' => 'webbro.usermanagement::lang.components.login.description'
+            'name'        => 'webbro.userforms::lang.components.login.name',
+            'description' => 'webbro.userforms::lang.components.login.description'
         ];
     }
     
@@ -60,8 +60,8 @@ class Login extends Account
     {
         $properties = parent::defineProperties();
         $properties['showTitles'] = [
-            'title'       => /*Show titles*/'webbro.usermanagement::lang.components.login.show_titles_title',
-            'description' => /*Should the field titles be displayed on the field*/'webbro.usermanagement::lang.components.login.show_titles_desc',
+            'title'       => /*Show titles*/'webbro.userforms::lang.components.login.show_titles_title',
+            'description' => /*Should the field titles be displayed on the field*/'webbro.userforms::lang.components.login.show_titles_desc',
             'type'        => 'checkbox',
             'default'     => 0
         ];

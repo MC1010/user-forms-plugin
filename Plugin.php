@@ -1,4 +1,4 @@
-<?php namespace WebBro\UserManagement;
+<?php namespace WebBro\UserForms;
 
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
@@ -10,8 +10,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'webbro.usermanagement::lang.plugin.name',
-            'description' => 'webbro.usermanagement::lang.plugin.description',
+            'name'        => 'webbro.userforms::lang.plugin.name',
+            'description' => 'webbro.userforms::lang.plugin.description',
             'author'      => 'Thomas Ralph',
             'icon'        => 'icon-user',
             'homepage'    => ''
@@ -21,11 +21,11 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            \WebBro\UserManagement\Components\Login::class       => 'login',
-            \WebBro\UserManagement\Components\Register::class    => 'register',
-            \WebBro\UserManagement\Components\Deactivate::class  => 'deactivate',
+            \WebBro\UserForms\Components\Login::class       => 'login',
+            \WebBro\UserForms\Components\Register::class    => 'register',
+            \WebBro\UserForms\Components\Deactivate::class  => 'deactivate',
 //             \WebBro\UserManagement\Components\Activate::class    => 'activate',
-            \WebBro\UserManagement\Components\ResetPassword::class    => 'resetpassword',
+            \WebBro\UserForms\Components\ResetPassword::class    => 'resetpassword',
         ];
     }
 }
