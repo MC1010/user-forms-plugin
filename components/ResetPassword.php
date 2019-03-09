@@ -10,6 +10,7 @@ use RainLab\User\Components\ResetPassword as ParentReset;
 use RainLab\User\Models\User as UserModel;
 use ValidationException;
 use Validator;
+use phpDocumentor\Reflection\Types\String_;
 
 class ResetPassword extends ParentReset
 {
@@ -24,9 +25,24 @@ class ResetPassword extends ParentReset
     public function defineProperties()
     {
         $properties = parent::defineProperties();
+        
         $properties['showTitles'] = [
             'title'       => /*Show titles*/'webbro.userforms::lang.components.login.show_titles_title',
             'description' => /*Should the field titles be displayed on the field*/'webbro.userforms::lang.components.login.show_titles_desc',
+            'type'        => 'checkbox',
+            'default'     => 0
+        ];
+        
+        $properties['showHeader'] = [
+            'title'       => /*Show header*/'webbro.userforms::lang.components.resetpassword.show_header_title',
+            'description' => /*Should the message header be displayed*/'webbro.userforms::lang.components.resetpassword.show_header_desc',
+            'type'        => 'checkbox',
+            'default'     => 0
+        ];
+        
+        $properties['showMessage'] = [
+            'title'       => /*Show message*/'webbro.userforms::lang.components.resetpassword.show_message_title',
+            'description' => /*Should the message body be displayed*/'webbro.userforms::lang.components.resetpassword.show_message_desc',
             'type'        => 'checkbox',
             'default'     => 0
         ];
@@ -47,9 +63,58 @@ class ResetPassword extends ParentReset
         $this->page['showTitles'] = $this->property('showTitles');
     }
     
-    //
-    // AJAX
-    //
+    /*
+     * Properties
+     */
+    
+    /**
+     * Should the component message header be shown?
+     * @return boolean
+     */
+    public function showHeader()
+    {
+        return $this->property('showHeader');
+    }
+    
+    /**
+     * Should the component message body be shown?
+     * @return boolean
+     */
+    public function showMessage()
+    {
+        return $this->property('showMessage');
+    }
+    
+    /**
+     * Defines the message header
+     * @return string
+     */
+    public function messageHeader()
+    {
+        return Lang::get('webbro.userforms::lang.components.resetpassword.message_header');
+    }
+    
+    /**
+     * Defines the message body
+     * @return string
+     */
+    public function messageBody()
+    {
+        return Lang::get('webbro.userforms::lang.components.resetpassword.message_body');
+    }
+    
+    /**
+     * Defines template name for restore email
+     * @return string
+     */
+    public function restoreMailTemplate()
+    {
+        return 'rainlab.user::mail.restore';
+    }
+    
+    /*
+     * AJAX
+     */
     
     /**
      * Trigger the password reset email
@@ -80,7 +145,7 @@ class ResetPassword extends ParentReset
             'code' => $code
         ];
         
-        Mail::send('rainlab.user::mail.restore', $data, function($message) use ($user) {
+        Mail::send($this->restoreMailTemplate(), $data, function($message) use ($user) {
             $message->to($user->email, $user->full_name);
         });
     }

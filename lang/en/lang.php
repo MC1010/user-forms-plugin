@@ -30,7 +30,13 @@
         ],
         'resetpassword' => [
             'name' => 'Reset Password',
-            'description' => 'Form for recovering and reseting a user\'s password'
+            'description' => 'Form for recovering and reseting a user\'s password',
+            'show_header_title' => 'Show header',
+            'show_header_desc' => 'Should the message header be displayed',
+            'show_message_title' => 'Show Message',
+            'show_message_desc' => 'Should the message body be displayed',
+            'message_header' => 'Lost your password?',
+            'message_body' => 'No problem! Enter your email address to verify your account.'
         ]
     ]
 ];
