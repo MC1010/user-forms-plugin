@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 	$(window).on('ajaxErrorMessage', function(event, message) {
 		event.preventDefault();
 		
-		$('#login-error').text(message).removeClass('d-none');
+		$('#login-error').html(message).removeClass('d-none');
 	});
 	
 	$(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorMsg, isFirst) {
