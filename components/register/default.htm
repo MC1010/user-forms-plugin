@@ -1,0 +1,114 @@
+<form 
+	data-request="onRegister"
+    data-request-validate>
+    
+    {% if this.session.has('message') %}
+    	<div class="alert alert-success text-center">{{ this.session.get('message') }}</div>
+    {% endif %}
+    
+    <div id="login-error" class="alert alert-danger d-none text-center"></div>
+    
+   	{# should we show the username field #}
+   	{% if showUsername %}
+    	<div class="form-group">
+    		{% if showTitles %}
+	        	<label for="userRegisterUsername">Username</label>
+	        {% endif %}
+	        
+	        <input
+	            name="username"
+	            type="text"
+	            class="form-control"
+	            id="userRegisterUsername"
+	            placeholder="Enter a username" />
+<!--        		<span data-validate-for="username"></span> -->
+		</div>
+   	{% endif %}
+    
+   	<!-- Name Field -->
+   	<div class="form-group">
+    	{% if showTitles %}
+        	<label for="userRegisterName">{{ nameAttributeLabel }}</label>
+        {% endif %}
+        
+        <input
+            name="name"
+            type="text"
+            class="form-control"
+            id="userRegisterName"
+            placeholder="Enter your {{ nameAttributeLabel|lower }}" />
+<!--        	<span data-validate-for="login"></span> -->
+    </div>
+    
+   	{# should we show the last name field #}
+   	{% if twoNameFields %}
+   	
+	   	<!-- Surname Field -->
+	   	<div class="form-group">
+	    	{% if showTitles %}
+	        	<label for="userRegisterLastName">Last name</label>
+	        {% endif %}
+	        
+	        <input
+	            name="surname"
+	            type="text"
+	            class="form-control"
+	            id="userRegisterLastName"
+	            placeholder="Enter your last name" />
+<!--        		<span data-validate-for="surname"></span> -->
+	    </div>
+	{% endif %}
+	
+	<!-- Email Field -->
+	<div class="form-group">
+		{% if showTitles %}
+			<label for="userRegisterEmail">E-Mail</label>
+		{% endif %}
+	        
+        <input
+            name="email"
+            type="text"
+            class="form-control"
+            id="userRegisterEmail"
+            placeholder="Enter your email" />
+<!--       		<span data-validate-for="email"></span> -->
+	</div>
+	
+	<!-- Password Field -->
+	<div class="form-group">
+		{% if showTitles %}
+			<label for="userRegisterPassword">Password</label>
+		{% endif %}
+	        
+        <input
+            name="password"
+            type="password"
+            class="form-control"
+            id="userRegisterPassword"
+            placeholder="Enter your password" />
+<!--        	<span data-validate-for="email"></span> -->
+	</div>
+	
+	{# should we show the password confirm field #}
+   	{% if passwordConfirm %}
+   	
+	   	<!-- Surname Field -->
+	   	<div class="form-group">
+	   		{% if showTitles %}
+				<label for="userRegisterPasswordConfirm">Confirm password</label>
+			{% endif %}
+	        
+        <input
+            name="password_confirmation"
+            type="password"
+            class="form-control"
+            id="userRegisterPasswordConfirm"
+            placeholder="Confirm your password" />
+<!--        	<span data-validate-for="password_confirmation"></span> -->
+	   	</div>
+	{% endif %}
+
+    <div class="pt-2">
+        <button type="submit" class="btn btn-block btn-primary" data-attach-loading>Register</button>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+<form 
+	data-request="onSignin"
+    data-request-validate>
+    
+    {% if this.session.has('message') %}
+    	<div class="alert alert-success text-center">{{ this.session.get('message') }}</div>
+    {% endif %}
+    
+    
+    <div id="login-error" class="alert alert-danger d-none text-center"></div>
+    
+    <div class="form-group">
+    	{% if showTitles %}
+        	<label for="userSigninLogin">{{ loginAttributeLabel }}</label>
+        {% endif %}
+        
+        <input
+            name="login"
+            type="text"
+            class="form-control"
+            id="userSigninLogin"
+            placeholder="Enter your {{ loginAttributeLabel|lower }}" />
+<!--        	<span data-validate-for="login"></span> -->
+    </div>
+
+    <div class="form-group">
+    	{% if showTitles %}
+        	<label for="userSigninPassword">Password</label>
+        {% endif %}
+        
+        <input
+            name="password"
+            type="password"
+            class="form-control"
+            id="userSigninPassword"
+            placeholder="Enter your password" />
+<!--        	<span data-validate-for="password"></span> -->
+    </div>
+
+    <div class="pt-2">
+        <button type="submit" class="btn btn-block btn-primary" data-attach-loading>Login</button>
+    </div>
+</form>

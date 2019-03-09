@@ -1,0 +1,14 @@
+/**
+ * Form Validation
+ */
+.form-group.has-error span {
+	color: #d9534f;
+}
+
+.form-group.has-error .form-control {
+	border-color: #d9534f;
+}
+
+.form-error-block {
+	font-size: 0.8em;
+}
