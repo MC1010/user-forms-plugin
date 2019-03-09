@@ -1,0 +1,21 @@
+<form 
+	data-request="onSendActivationEmail"
+    data-request-validate>
+    
+    <div id="login-error" class="alert alert-danger text-center d-none"></div>
+    
+    <div class="form-group">
+    	{% if showTitles %}
+        	<label for="userActivateEmail">E-Mail</label>
+        {% endif %}
+        
+        <input
+            name="email"
+            type="text"
+            class="form-control"
+            id="userActivateEmail"
+            placeholder="Enter your email" />
+    </div>
+    
+    <button type="submit" class="btn btn-block btn-primary" data-attach-loading>Resend Email</button>
+</form>

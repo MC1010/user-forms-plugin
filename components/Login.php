@@ -1,5 +1,6 @@
 <?php namespace WebBro\UserForms\Components;
 
+use ApplicationException;
 use Auth;
 use Cms\Classes\Page;
 use Event;
@@ -8,14 +9,18 @@ use Flash;
 use Lang;
 use RainLab\User\Components\Account;
 use RainLab\User\Models\Settings as UserSettings;
+use RainLab\User\Models\User as UserModel;
 use Redirect;
 use Request;
 use ValidationException;
 use Validator;
-use Illuminate\Support\Facades\Log;
 
 class Login extends Account
 {
+    /**
+     * {@inheritDoc}
+     * @see \RainLab\User\Components\Account::componentDetails()
+     */
     public function componentDetails()
     {
         return [
@@ -24,18 +29,21 @@ class Login extends Account
         ];
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \RainLab\User\Components\Account::onRun()
+     */
     public function onRun()
     {
         //redirect to HTTPS checker
-        if ($redirect = $this->redirectForceSecure()) {
+        if($redirect = $this->redirectForceSecure()) 
+        {
             return $redirect;
         }
         
-        /*
-         * Activation code supplied
-         */
-        if ($code = $this->activationCode()) {
-            $this->onActivate($code);
+        //activation code is present
+        if($code = $this->activationCode()) {
+            $this->onActivate($code); //run activation process
         }
         
         //user is logged in
@@ -49,19 +57,25 @@ class Login extends Account
         }
         else 
         {
-            $this->addJs('assets/js/login.js');
+            //load required scripts
+            $this->addJs('assets/js/forms.js');
             $this->addCss('assets/css/style.css');
             
             $this->prepareVars();
         }
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \RainLab\User\Components\Account::defineProperties()
+     */
     public function defineProperties()
     {
         $properties = parent::defineProperties();
+        
         $properties['showTitles'] = [
-            'title'       => /*Show titles*/'webbro.userforms::lang.components.login.show_titles_title',
-            'description' => /*Should the field titles be displayed on the field*/'webbro.userforms::lang.components.login.show_titles_desc',
+            'title'       => 'webbro.userforms::lang.components.login.show_titles_title',
+            'description' => 'webbro.userforms::lang.components.login.show_titles_desc',
             'type'        => 'checkbox',
             'default'     => 0
         ];
@@ -69,13 +83,38 @@ class Login extends Account
         return $properties;
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \RainLab\User\Components\Account::prepareVars()
+     */
     public function prepareVars()
     {
         parent::prepareVars();
         
-        $this->page['showTitles'] = $this->property('showTitles');
+        $this->page['showTitles'] = $this->showTitles();
     }
     
+    /*
+     * Properties
+     */
+    
+    /**
+     * Should the field titles be shown
+     * @return boolean
+     */
+    protected function showTitles()
+    {
+        return $this->property('showTitles');
+    }
+    
+    /*
+     * AJAX
+     */
+    
+    /**
+     * {@inheritDoc}
+     * @see \RainLab\User\Components\Account::onSignin()
+     */
     public function onSignin()
     {
         try 
@@ -84,6 +123,8 @@ class Login extends Account
              * Validate input
              */
             $data = post();
+            
+            //get defined validation rules for form
             $rules = $this->validationRules();
             
             if (!array_key_exists('login', $data)) 
@@ -91,7 +132,7 @@ class Login extends Account
                 $data['login'] = post('username', post('email'));
             }
             
-            
+            //create validator
             $validation = $this->makeValidator($data, $rules);
             if ($validation->fails()) 
             {
@@ -152,28 +193,26 @@ class Login extends Account
         try {
             $code = post('code', $code);
             
-            $errorFields = ['code' => Lang::get(/*Invalid activation code supplied.*/'rainlab.user::lang.account.invalid_activation_code')];
+            $message = ['code' => Lang::get(/*Invalid activation code supplied.*/'rainlab.user::lang.account.invalid_activation_code') . '<a class="d-block" href="javascript:;" data-request="onActivationForm">Send the verification email again</a>'];
             
-            /*
-             * Break up the code parts
-             */
+            //break up the code parts
             $parts = explode('!', $code);
             if (count($parts) != 2) {
-                throw new ValidationException($errorFields);
+                throw new ValidationException($message);
             }
             
             list($userId, $code) = $parts;
             
             if (!strlen(trim($userId)) || !strlen(trim($code))) {
-                throw new ValidationException($errorFields);
+                throw new ValidationException($message);
             }
             
             if (!$user = Auth::findUserById($userId)) {
-                throw new ValidationException($errorFields);
+                throw new ValidationException($message);
             }
             
             if (!$user->attemptActivation($code)) {
-                throw new ValidationException($errorFields);
+                throw new ValidationException($message);
             }
             
             $message = Lang::get(/*Successfully activated your account.*/'rainlab.user::lang.account.success_activation');
@@ -181,15 +220,75 @@ class Login extends Account
             /*
              * Redirect
              */
-            return Redirect('')->with('message', $message);
+            return Redirect::refresh()->with('message', $message);
             
+        }
+        catch (Exception $ex) {
+            //refresh the page and show error
+            return Redirect::refresh()->with('error', $ex->getMessage());
+        }
+    }
+    
+    public function onActivationForm()
+    {
+        return [
+            '#partialLoginForm' => $this->renderPartial('login::activation_form')
+        ];
+    }
+    
+    /**
+     * Trigger a subsequent activation email
+     */
+    public function onSendActivationEmail()
+    {
+        try {
+            $rules = [
+                'email' => 'required|email|between:6,255'
+            ];
+            
+            $validation = Validator::make(post(), $rules);
+            if ($validation->fails()) {
+                throw new ValidationException($validation);
+            }
+            
+            $user = UserModel::findByEmail(post('email'));
+            if (!$user || $user->is_guest) {
+                throw new ApplicationException(Lang::get(/*A user was not found with the given credentials.*/'rainlab.user::lang.account.invalid_user'));
+            }
+            
+            if ($user->is_activated) {
+                throw new ApplicationException(Lang::get(/*Your account is already activated!*/'rainlab.user::lang.account.already_active'));
+            }
+            
+            $this->sendActivationEmail($user);
+            
+            $message = Lang::get(/*An activation email has been sent to your email address.*/'rainlab.user::lang.account.activation_email_sent');
+            
+            return Redirect::refresh()->with('message', $message);
         }
         catch (Exception $ex) {
             if (Request::ajax()) throw $ex;
             else Flash::error($ex->getMessage());
         }
+        
+        /*
+         * Redirect
+         */
+        if ($redirect = $this->makeRedirection()) {
+            return $redirect;
+        }
     }
     
+    /*
+     * Helpers
+     */
+    
+    /**
+     * 
+     * @param unknown $data
+     * @param unknown $rules
+     * @return unknown
+     */
     public function makeValidator($data, $rules)
     {
         $messages = $this->getValidatorMessages();
