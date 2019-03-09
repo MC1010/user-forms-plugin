@@ -1,7 +1,14 @@
-<p class="lead">
-    <strong>Lost your password?</strong> 
-    <span class="d-block">No problem! Enter your email address to verify your account.</span>
-</p>
+{% if showHeader or showMessage %}
+	<p class="lead text-center">
+		{% if showHeader %}
+	    	<strong>{{ header }}</strong>
+	    {% endif %}
+	    
+	    {% if showMessage %}
+	    	<span class="d-block">{{ body }}</span>
+	    {% endif %}
+	</p>
+{% endif %}
 
 <form
     data-request="onRestorePassword"
