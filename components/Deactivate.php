@@ -21,7 +21,7 @@ class Deactivate extends Account
         //user is logged in
         if($user = $this->user())
         {
-            $this->addJs('assets/js/login.js');
+            $this->addJs('assets/js/forms.js');
             $this->addCss('assets/css/style.css');
         }
         else

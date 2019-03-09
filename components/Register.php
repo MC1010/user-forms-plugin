@@ -41,7 +41,7 @@ class Register extends Account
         }
         else
         {
-            $this->addJs('assets/js/login.js'); //generic js for form effects
+            $this->addJs('assets/js/forms.js'); //generic js for form effects
             $this->addCss('assets/css/style.css');
             
             $this->prepareVars();
@@ -64,6 +64,8 @@ class Register extends Account
     public function defineProperties()
     {
         $properties = parent::defineProperties();
+        
+        unset($properties['paramCode']);
         
         $properties['showTitles'] = [
             'title'       => /*Show titles*/'webbro.userforms::lang.components.login.show_titles_title',

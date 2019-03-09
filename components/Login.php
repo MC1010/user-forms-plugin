@@ -270,13 +270,6 @@ class Login extends Account
             if (Request::ajax()) throw $ex;
             else Flash::error($ex->getMessage());
         }
-        
-        /*
-         * Redirect
-         */
-        if ($redirect = $this->makeRedirection()) {
-            return $redirect;
-        }
     }
     
     /*
