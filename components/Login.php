@@ -276,12 +276,6 @@ class Login extends Account
      * Helpers
      */
     
-    /**
-     * 
-     * @param unknown $data
-     * @param unknown $rules
-     * @return unknown
-     */
     public function makeValidator($data, $rules)
     {
         $messages = $this->getValidatorMessages();
