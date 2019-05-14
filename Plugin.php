@@ -12,7 +12,7 @@ class Plugin extends PluginBase
         return [
             'name'        => 'webbro.userforms::lang.plugin.name',
             'description' => 'webbro.userforms::lang.plugin.description',
-            'author'      => 'Thomas Ralph',
+            'author'      => 'Webster Brothers',
             'icon'        => 'icon-user',
             'homepage'    => ''
         ];
